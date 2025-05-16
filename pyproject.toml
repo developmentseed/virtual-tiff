@@ -56,6 +56,7 @@ dev = [
   "xarray",
   "dvc[s3]>=3.59.1",
 ]
+demo = ["rasterix @ git+https://github.com/dcherian/rasterix"]
 
 [tool.pixi.project]
 channels = ["conda-forge"]
@@ -78,6 +79,12 @@ python = "3.12.*"
 rioxarray = "*"
 rasterio = "*"
 
+# Define a feature set for demos
+[tool.pixi.feature.demo.dependencies]
+jupyterlab = "*"
+matplotlib = ">=3.10.3,<4"
+hvplot = ">=0.11.3,<0.12"
+
 # Define commands to run within the test environments
 [tool.pixi.feature.test.tasks]
 run-mypy = { cmd = "mypy src" }
@@ -90,6 +97,7 @@ download-test-images = { cmd = "dvc pull" }
 # Define which features and groups to include in different pixi (similar to conda) environments)
 [tool.pixi.environments]
 test = ["dev", "test"]
+demo = ["dev", "test", "demo"]
 test-py311 = ["dev", "test", "py311"] # test against python 3.11
 test-py312 = ["dev", "test","py312"] # test against python 3.12
 
